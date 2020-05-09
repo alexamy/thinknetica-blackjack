@@ -28,6 +28,20 @@ module Card
     CLUBS = 0xD
   end
 
+  def self.all
+    values = Value.constants
+    suits = Suit.constants
+
+    cards = []
+    suits.each do |suit|
+      values.each do |value|
+        cards << { value: value, suit: suit }
+      end
+    end
+
+    cards
+  end
+
   def self.name_to_const(name)
     value, suit = name.split(' ')
     value = Value.const_get(value.upcase.to_sym)
