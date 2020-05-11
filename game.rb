@@ -9,10 +9,12 @@ class Game
     ask_name
     init_bank_accounts
     loop do
-      check_game_end
+      break if game_end?
+
       init_session
       game_loop
     end
+    show_game_results
   end
 
   def init_session
@@ -25,7 +27,7 @@ class Game
     # ask and save user name
   end
 
-  def check_game_end
+  def game_end?
     # end game, if one of the players have 0 money
   end
 
@@ -35,6 +37,10 @@ class Game
 
   def add_bets
     # add standard bet to bank pool
+  end
+
+  def show_game_results
+    # show winner
   end
 
   def game_loop
