@@ -1,6 +1,6 @@
 # Bank account
 class Account
-  attr_reader :name, :amount
+  attr_reader_writer :name, :amount
 
   def initialize(name, amount)
     @name = name
@@ -28,15 +28,11 @@ class Account
     sub(amount)
     other.add(amount)
   end
-
-  protected
-
-  attr_writer :name, :amount
 end
 
 # Bank and money pool for bets
 class Bank
-  attr_reader :player, :dealer, :pool
+  attr_reader_writer :player, :dealer, :pool
 
   def initialize(start_money)
     @player = Account.new(:player, start_money)
@@ -56,8 +52,4 @@ class Bank
   def dealer_won
     dealer.from(pool)
   end
-
-  protected
-
-  attr_writer :player, :dealer, :pool
 end
