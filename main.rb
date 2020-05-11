@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'kernel.rb'
+require_relative 'require_all.rb'
 require_all '.'
 
 # Game.new.run
