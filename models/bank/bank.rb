@@ -14,10 +14,10 @@ class Bank
   end
 
   def player_won
-    player.from(pool)
+    player << pool
   end
 
   def dealer_won
-    dealer.from(pool)
+    dealer << pool
   end
 end

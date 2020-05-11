@@ -26,4 +26,7 @@ class BankAccount
   def from(other)
     other.to(self)
   end
+
+  alias >> to
+  alias << from
 end
