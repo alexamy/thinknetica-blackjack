@@ -1,5 +1,5 @@
 # Bank account
-class Account
+class BankAccount
   attr_reader_writer :name, :amount
 
   def initialize(name, amount)
