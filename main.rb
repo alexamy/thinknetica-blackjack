@@ -3,4 +3,4 @@
 require_relative 'kernel.rb'
 require_all '.'
 
-Game.new.run
+# Game.new.run

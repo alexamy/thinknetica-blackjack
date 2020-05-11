@@ -7,28 +7,26 @@ class Account
     @amount = amount
   end
 
-  def give(amount)
+  def add(amount)
     self.amount += amount
   end
 
-  def get(amount)
+  def sub(amount)
     after = self.amount - amount
-    raise "#{name} can't give #{amount}" if money_after.negative?
+    raise "#{name} can't give #{amount}" if after.negative?
 
     self.amount = after
   end
 
   # :reek:FeatureEnvy
-  def from(other, amount)
-    amount ||= other.amount
-    other.get(amount)
-    give(amount)
+  def from(other, amount = other.amount)
+    other.sub(amount)
+    add(amount)
   end
 
-  def to(other, amount)
-    amount ||= self.amount
-    get(amount)
-    other.give(amount)
+  def to(other, amount = self.amount)
+    sub(amount)
+    other.add(amount)
   end
 
   protected
@@ -43,7 +41,7 @@ class Bank
   def initialize(start_money)
     @player = Account.new(:player, start_money)
     @dealer = Account.new(:dealer, start_money)
-    @pool = Account.new(:pool, start_money)
+    @pool = Account.new(:pool, 0)
   end
 
   def place_bet(amount)
