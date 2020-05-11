@@ -1,35 +1,65 @@
-# Bank and money pool for bets
-class Bank
-  attr_reader :accounts, :pool
+# Bank account
+class Account
+  attr_reader :name, :amount
 
-  def initialize
-    @accounts = []
-    @pool = 0
+  def initialize(name, amount)
+    @name = name
+    @amount = amount
   end
 
-  def add_account(name, amount)
-    raise "Already created account: #{name}" if accounts[name]
-
-    accounts[name] = amount
+  def give(amount)
+    self.amount += amount
   end
 
-  def to_pool(name, amount)
-    money_after = accounts[name] - amount
+  def get(amount)
+    after = self.amount - amount
     raise "#{name} can't give #{amount}" if money_after.negative?
 
-    accounts[name] = money_after
-    self.pool += amount
+    self.amount = after
   end
 
-  def from_pool(name, amount)
-    money_after = pool - amount
-    raise "Pool don't have #{amount}" if money_after.negative?
+  # :reek:FeatureEnvy
+  def from(other, amount)
+    amount ||= other.amount
+    other.get(amount)
+    give(amount)
+  end
 
-    accounts[name] += amount
-    self.pool = money_after
+  def to(other, amount)
+    amount ||= self.amount
+    get(amount)
+    other.give(amount)
   end
 
   protected
 
-  attr_writer :accounts, :pool
+  attr_writer :name, :amount
+end
+
+# Bank and money pool for bets
+class Bank
+  attr_reader :player, :dealer, :pool
+
+  def initialize(start_money)
+    @player = Account.new(:player, start_money)
+    @dealer = Account.new(:dealer, start_money)
+    @pool = Account.new(:pool, start_money)
+  end
+
+  def place_bet(amount)
+    pool.from(player, amount)
+    pool.from(dealer, amount)
+  end
+
+  def player_won
+    player.from(pool)
+  end
+
+  def dealer_won
+    dealer.from(pool)
+  end
+
+  protected
+
+  attr_writer :player, :dealer, :pool
 end
