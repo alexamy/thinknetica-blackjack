@@ -18,14 +18,12 @@ class BankAccount
     self.amount = after
   end
 
-  # :reek:FeatureEnvy
-  def from(other, amount = other.amount)
-    other.sub(amount)
-    add(amount)
-  end
-
   def to(other, amount = self.amount)
     sub(amount)
     other.add(amount)
+  end
+
+  def from(other)
+    other.to(self)
   end
 end
