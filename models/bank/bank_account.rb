@@ -23,8 +23,9 @@ class BankAccount
     other.add(amount)
   end
 
-  def from(other)
-    other.to(self)
+  # :reek:FeatureEnvy
+  def from(other, amount = other.amount)
+    other.to(self, amount)
   end
 
   alias >> to
