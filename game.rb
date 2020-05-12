@@ -1,14 +1,14 @@
 # main class
 class Game
-  include Rules
   include GameInitializer
   include GameLoop
 
-  attr_reader_writer :name, :bank, :deck, :player, :dealer
+  attr_reader_writer :rules, :name, :bank, :deck, :player, :dealer
 
-  def initialize
+  def initialize(rules)
+    @rules = rules
     @name = 'Anonymous'
-    @bank = Bank.new(START_MONEY)
+    @bank = Bank.new(rules.start_money)
   end
 
   def run
@@ -29,5 +29,9 @@ class Game
 
   def show_ui
     # render ui
+  end
+
+  def hand_value(cards)
+    # determine hand cards values sum
   end
 end

@@ -18,6 +18,6 @@ module GameInitializer
   end
 
   def add_bets
-    bank.place_bet(BET)
+    bank.place_bet(rules.bet)
   end
 end
