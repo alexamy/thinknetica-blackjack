@@ -55,7 +55,7 @@ class Game
   end
 
   def add_bets
-    # add standard bet to bank pool
+    bank.place_bet(BET)
   end
 
   def show_game_results
