@@ -2,9 +2,10 @@
 class Game
   include Rules
 
-  attr_reader_writer :bank
+  attr_reader_writer :name, :bank
 
   def initialize
+    @name = 'Anonymous'
     @bank = Bank.new(START_MONEY)
   end
 
@@ -21,7 +22,9 @@ class Game
   end
 
   def ask_name
-    # ask and save user name
+    puts 'What is your name?'
+    name = gets.chomp
+    self.name = name unless name.empty?
   end
 
   def game_loop
