@@ -29,9 +29,9 @@ module CardHelper
     CLUBS = 0xD
   end
 
-  def self.all(hidden = true)
+  def self.all(*card_args)
     pairs = Suit.constants.product(Value.constants)
-    pairs.map { |suit, value| Card.new(value, suit, hidden) }
+    pairs.map { |suit, value| Card.new(value, suit, *card_args) }
   end
 
   def self.code(value, suit)
