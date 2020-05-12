@@ -3,4 +3,4 @@
 require_relative 'require_all.rb'
 require_all '.'
 
-# Game.new.run
+Game.new.run

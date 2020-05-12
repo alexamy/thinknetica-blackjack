@@ -2,7 +2,7 @@
 class Game
   include Rules
 
-  attr_reader_writer :name, :bank
+  attr_reader_writer :name, :bank, :deck, :player, :dealer
 
   def initialize
     @name = 'Anonymous'
@@ -17,7 +17,7 @@ class Game
 
   def init_session
     init_deck
-    add_cards
+    init_hands
     add_bets
   end
 
@@ -50,11 +50,14 @@ class Game
   end
 
   def init_deck
-    # initialize standard 52 cards deck
+    self.deck = Deck.new(CardHelper.all)
+    deck.shuffle!
   end
 
-  def add_cards
-    # give each player 2 cards
+  # :reek:DuplicateMethodCall
+  def init_hands
+    self.player = Hand.new(deck.get!(2))
+    self.dealer = Hand.new(deck.get!(2))
   end
 
   def add_bets
