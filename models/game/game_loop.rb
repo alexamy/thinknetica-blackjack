@@ -20,6 +20,7 @@ module GameLoop
 
   def player_turn
     # ask player what to do
+    gets
   end
 
   def dealer_turn

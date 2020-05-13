@@ -28,7 +28,9 @@ class Game
   end
 
   def show_ui
-    # render ui
+    puts "#{bank.dealer} #{dealer}", "\n"
+    puts "#{bank.pool} #{deck.top_card}", "\n"
+    puts "#{bank.player} #{player}"
   end
 
   def hand_value(cards)
