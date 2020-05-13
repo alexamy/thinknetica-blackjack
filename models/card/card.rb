@@ -21,7 +21,7 @@ class Card
   end
 
   def to_s
-    code = hidden ? CardHelper::HIDDEN : CardHelper.code(value, suit)
+    code = hidden ? CardSymbols::HIDDEN : CardSymbols.code(value, suit)
     "#{code.chr('UTF-8')} "
   end
 end

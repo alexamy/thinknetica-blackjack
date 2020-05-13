@@ -7,34 +7,18 @@ class Rules
     @bet = bet
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def card_prices
-    {
-      TWO: 2,
-      THREE: 3,
-      FOUR: 4,
-      FIVE: 5,
-      SIX: 6,
-      SEVEN: 7,
-      EIGHT: 8,
-      NINE: 9,
-      TEN: 10,
-      JACK: 10,
-      QUEEN: 10,
-      KING: 10
+  def self.card_prices
+    prices = {
+      jack: 10,
+      queen: 10,
+      king: 10
     }
+    result = CardSymbols.values.merge(prices)
+    result.delete(:ace)
+    result
   end
-  # rubocop:enable Metrics/MethodLength
 
   def hand_value(cards)
-    values = cards.map do |card|
-      CardHelper::Value.constants.find do |k|
-        CardHelper::Value.const_get(k) == card.value
-      end
-    end
-
-    puts values
-
-    aces, others = values.partition { |value| value == :ACE }
+    aces, others = cards.map(&:value).partition { |value| value == :ace }
   end
 end

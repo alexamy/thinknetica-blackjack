@@ -11,7 +11,7 @@ module GameInitializer
   end
 
   def init_deck
-    self.deck = Deck.new(CardHelper.all)
+    self.deck = Deck.new(CardSymbols.all)
     deck.shuffle!
   end
 
