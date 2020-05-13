@@ -13,9 +13,7 @@ class Rules
       queen: 10,
       king: 10
     }
-    result = CardSymbols.values.merge(prices)
-    result.delete(:ace)
-    result
+    CardSymbols.values.except(:ace).merge(prices)
   end
 
   def hand_value(cards)
