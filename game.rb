@@ -39,10 +39,11 @@ class Game
     puts bank.pool, "\n"
 
     puts bank.player
-    puts player
+    puts "#{player} #{hand_value(player)}"
   end
 
   def hand_value(cards)
-    # determine hand cards values sum
+    sum = 0
+    "Σ #{sum}"
   end
 end
