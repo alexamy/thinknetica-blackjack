@@ -1,5 +1,6 @@
 # show game info
 module GameUI
+  # :reek:TooManyStatements
   def show_ui
     system('clear')
     show_dealer

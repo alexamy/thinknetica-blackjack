@@ -17,7 +17,7 @@ module GameInitializer
 
   # :reek:DuplicateMethodCall
   def init_hands
-    self.player = Hand.new(deck.get!(2))
+    self.player = Hand.new(deck.get!(2).each(&:show))
     self.dealer = Hand.new(deck.get!(2))
   end
 

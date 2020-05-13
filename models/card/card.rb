@@ -2,10 +2,18 @@
 class Card
   attr_reader_writer :value, :suit, :hidden
 
-  def initialize(value, suit, hidden = false)
+  def initialize(value, suit, hidden = true)
     @value = value
     @suit = suit
     @hidden = hidden
+  end
+
+  def show
+    self.hidden = false
+  end
+
+  def hide
+    self.hidden = true
   end
 
   def toggle
