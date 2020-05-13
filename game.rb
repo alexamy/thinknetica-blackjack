@@ -34,7 +34,6 @@ class Game
   end
 
   def hand_value(cards)
-    sum = 0
-    "Σ #{sum}"
+    "Σ#{rules.hand_value(cards)}"
   end
 end

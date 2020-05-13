@@ -21,6 +21,6 @@ module GameUI
 
   def show_player
     puts player
-    puts "#{bank.player} #{hand_value(player)}"
+    puts "#{bank.player} #{hand_value(player.cards)}"
   end
 end
