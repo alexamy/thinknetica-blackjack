@@ -1,5 +1,6 @@
 # main class
 class Game
+  include GameUI
   include GameInitializer
   include GameLoop
 
@@ -30,16 +31,6 @@ class Game
 
   def show_game_results
     # show winner
-  end
-
-  def show_ui
-    puts bank.dealer
-    puts dealer, "\n"
-
-    puts bank.pool, "\n"
-
-    puts bank.player
-    puts "#{player} #{hand_value(player)}"
   end
 
   def hand_value(cards)
