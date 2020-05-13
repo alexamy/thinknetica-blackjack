@@ -9,15 +9,15 @@ class Deck
     @cards = cards
   end
 
-  def get!(count)
-    raise 'Count must be positive!' unless count.positive?
-
-    count.times.map { pop }
-  end
-
   def to_s
     cards.map(&:to_s).join
   end
+
+  def top_card
+    cards.last
+  end
+
+  alias get! pop
 end
 
 Hand = Deck
