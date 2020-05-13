@@ -2,8 +2,8 @@
 class Bank
   attr_reader_writer :player, :dealer, :pool
 
-  def initialize(start_money)
-    @player = BankAccount.new(:player, start_money)
+  def initialize(start_money, player_name)
+    @player = BankAccount.new(player_name, start_money)
     @dealer = BankAccount.new(:dealer, start_money)
     @pool = BankAccount.new(:pool, 0)
   end

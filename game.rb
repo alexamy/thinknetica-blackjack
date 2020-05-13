@@ -7,20 +7,25 @@ class Game
 
   def initialize(rules)
     @rules = rules
-    @name = 'Anonymous'
-    @bank = Bank.new(rules.start_money)
   end
 
   def run
     ask_name
+    init_bank
+
     game_loop
     show_game_results
   end
 
   def ask_name
-    puts 'What is your name?'
-    name = gets.chomp
-    self.name = name unless name.empty?
+    begin
+      puts 'What is your name?'
+      name = gets.chomp
+      raise if name.empty?
+    rescue StandardError
+      retry
+    end
+    self.name = name
   end
 
   def show_game_results
@@ -28,9 +33,13 @@ class Game
   end
 
   def show_ui
-    puts "#{bank.dealer} #{dealer}", "\n"
-    puts "#{bank.pool} #{deck.top_card}", "\n"
-    puts "#{bank.player} #{player}"
+    puts bank.dealer
+    puts dealer, "\n"
+
+    puts bank.pool, "\n"
+
+    puts bank.player
+    puts player
   end
 
   def hand_value(cards)

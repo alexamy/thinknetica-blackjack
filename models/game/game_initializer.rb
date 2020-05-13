@@ -6,6 +6,10 @@ module GameInitializer
     add_bets
   end
 
+  def init_bank
+    self.bank = Bank.new(rules.start_money, name)
+  end
+
   def init_deck
     self.deck = Deck.new(CardHelper.all)
     deck.shuffle!
