@@ -28,6 +28,10 @@ class BankAccount
     other.to(self, amount)
   end
 
+  def to_s
+    "#{name.capitalize} #{amount}$"
+  end
+
   alias >> to
   alias << from
 end
