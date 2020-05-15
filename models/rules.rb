@@ -16,7 +16,17 @@ class Rules
     CardSymbols.values.except(:ace).merge(prices)
   end
 
+  # :reek:TooManyStatements
   def hand_value(cards)
+    values = self.class.card_prices
     aces, others = cards.map(&:value).partition { |value| value == :ace }
+
+    sum = others.sum { |name| values[name] }
+    aces.each do
+      value = sum + 11 <= 21 ? 11 : 1
+      sum += value
+    end
+
+    sum
   end
 end
