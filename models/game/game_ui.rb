@@ -10,7 +10,7 @@ module GameUI
   # :reek:ControlParameter
   def show_player(key, visible = false)
     player = players[key]
-    puts bank.send(key)
+    puts bank.accounts[key]
     print player
     print " #{hand_value(player.cards)}" if visible
     puts "\n\n"

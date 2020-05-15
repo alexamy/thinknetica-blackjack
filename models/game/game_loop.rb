@@ -45,7 +45,7 @@ module GameLoop
   end
 
   def game_end?
-    # end game, if one of the players have 0 money
+    bank.accounts.any? { |account| account.amount.zero? }
   end
 
   def end_session?

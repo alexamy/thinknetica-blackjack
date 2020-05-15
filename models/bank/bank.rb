@@ -1,23 +1,25 @@
 # Bank and money pool for bets
 class Bank
-  attr_reader_writer :user, :dealer, :pool
+  attr_reader_writer :accounts, :pool
 
   def initialize(start_money, user_name)
-    @user = BankAccount.new(user_name, start_money)
-    @dealer = BankAccount.new(:dealer, start_money)
     @pool = BankAccount.new(:pool, 0)
+    @accounts = {
+      user: BankAccount.new(user_name, start_money),
+      dealer: BankAccount.new(:dealer, start_money)
+    }
   end
 
   def place_bet(amount)
-    pool.from(user, amount)
-    pool.from(dealer, amount)
+    pool.from(accounts[:user], amount)
+    pool.from(accounts[:dealer], amount)
   end
 
   def user_won
-    user << pool
+    accounts[:user] << pool
   end
 
   def dealer_won
-    dealer << pool
+    accounts[:dealer] << pool
   end
 end
