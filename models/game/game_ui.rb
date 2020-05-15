@@ -12,7 +12,7 @@ module GameUI
     player = players[key]
     puts bank.accounts[key]
     print player
-    print " #{hand_value(player.cards)}" if visible
+    print "Σ#{rules.hand_value(player.cards)}" if visible
     puts "\n\n"
   end
 

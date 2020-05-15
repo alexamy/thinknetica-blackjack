@@ -24,7 +24,9 @@ module GameLoop
   def user_turn(choice)
     case choice
     when :add
-      players[:user].add!(deck.get!)
+      card = deck.get!
+      card.show
+      players[:user].add!(card)
     when :end
       set_end_game
     end
@@ -42,7 +44,7 @@ module GameLoop
 
   def dealer_turn
     dealer = players[:dealer]
-    dealer.add!(deck.get!) if hand_value(dealer.cards) < 17
+    dealer.add!(deck.get!) if rules.hand_value(dealer.cards) < 17
   end
 
   def set_end_game

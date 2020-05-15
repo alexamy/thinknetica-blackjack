@@ -32,8 +32,4 @@ class Game
   def show_game_results
     # show winner
   end
-
-  def hand_value(cards)
-    "Σ#{rules.hand_value(cards)}"
-  end
 end
