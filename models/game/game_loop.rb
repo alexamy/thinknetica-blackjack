@@ -7,6 +7,9 @@ module GameLoop
       self.session_end_flag = false
       init_session
       session_loop
+
+      is_repeat = ask_another_game
+      return if is_repeat == 'n'
     end
   end
 
@@ -18,6 +21,11 @@ module GameLoop
       user_turn(ask_turn)
       dealer_turn
     end
+  end
+
+  def ask_another_game
+    puts 'Do you want to continue? (n - no)'
+    gets.chomp.downcase
   end
 
   # :reek:ControlParameter
@@ -58,6 +66,6 @@ module GameLoop
 
   def end_session?
     card_count = players.values.all? { |player| player.cards.length == 3 }
-    session_end_flag || card_count
+    card_count || session_end_flag
   end
 end

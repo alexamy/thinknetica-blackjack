@@ -30,6 +30,6 @@ class Game
   end
 
   def show_game_results
-    # show winner
+    'Game end!'
   end
 end
