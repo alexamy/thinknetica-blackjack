@@ -1,26 +1,23 @@
 # show game info
 module GameUI
-  # :reek:TooManyStatements
   def show_ui
     system('clear')
     show_dealer
-    puts
     show_bank
-    puts
     show_player
   end
 
   def show_dealer
     puts bank.dealer
-    puts dealer
+    puts dealer, "\n"
   end
 
   def show_bank
-    puts bank.pool
+    puts bank.pool, "\n"
   end
 
   def show_player
     puts player
-    puts "#{bank.player} #{hand_value(player.cards)}"
+    puts "#{bank.player} #{hand_value(player.cards)}", "\n"
   end
 end
