@@ -26,7 +26,7 @@ module GameLoop
     when :add
       players[:user].add!(deck.get!)
     when :end
-      self.session_end_flag = true
+      set_end_game
     end
   end
 
@@ -45,11 +45,17 @@ module GameLoop
     dealer.add!(deck.get!) if hand_value(dealer.cards) < 17
   end
 
+  def set_end_game
+    self.session_end_flag = true
+    players[:dealer].cards.each(&:show)
+  end
+
   def game_end?
-    bank.accounts.any? { |account| account.amount.zero? }
+    bank.accounts.values.any? { |account| account.amount.zero? }
   end
 
   def end_session?
-    session_end_flag || players.all? { |player| player.cards.length == 3 }
+    card_count = players.values.all? { |player| player.cards.length == 3 }
+    session_end_flag || card_count
   end
 end
