@@ -43,20 +43,28 @@ module GameLoop
     end
   end
 
+  # TODO refactor
   def ask_turn
-    # TODO show only pass / end if 3 cards
-    puts 'Your turn (1 pass, 2 add, 3 end):'
-    choice = gets.chomp.to_i
-    raise unless [1, 2, 3].include?(choice)
+    options = %i[pass add end]
+    options.delete(:add) if players[:user].cards.length == 3
 
-    %i[pass add end][choice - 1]
+    options_msg = options
+                  .map.with_index { |opt, idx| "#{idx} - #{opt}" }
+                  .join(', ')
+
+    puts "Your turn (#{options_msg}) :"
+    choice = gets.chomp.to_i
+    raise unless options[choice]
+
+    options[choice]
   rescue StandardError
     retry
   end
 
   def dealer_turn
     dealer = players[:dealer]
-    dealer.add!(deck.get!) if rules.hand_value(dealer.cards) < 17
+    can_add = rules.hand_value(dealer.cards) < 17 && dealer.cards.length < 3
+    dealer.add!(deck.get!) if can_add
   end
 
   def show_results
