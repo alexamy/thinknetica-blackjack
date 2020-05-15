@@ -41,7 +41,8 @@ module GameLoop
   end
 
   def dealer_turn
-    # ai decision what to do
+    dealer = players[:dealer]
+    dealer.add!(deck.get!) if hand_value(dealer.cards) < 17
   end
 
   def game_end?
