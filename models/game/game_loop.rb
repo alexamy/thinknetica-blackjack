@@ -17,6 +17,7 @@ module GameLoop
     loop do
       show_ui
       if end_session?
+        set_end_game
         show_results
         return
       end
@@ -68,7 +69,17 @@ module GameLoop
   end
 
   def show_results
-    # TODO
+    user = rules.hand_value(players[:user].cards)
+    dealer = rules.hand_value(players[:dealer].cards)
+
+    case
+    when user < dealer
+      bank.dealer_won
+    when user > dealer
+      bank.user_won
+    when user == dealer
+      bank.draw
+    end
   end
 
   def set_end_game

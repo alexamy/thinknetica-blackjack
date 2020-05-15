@@ -22,4 +22,10 @@ class Bank
   def dealer_won
     accounts[:dealer] << pool
   end
+
+  def draw
+    half = pool.amount / 2
+    pool.to(accounts[:user], half)
+    pool.to(accounts[:dealer], half)
+  end
 end
