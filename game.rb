@@ -4,7 +4,7 @@ class Game
   include GameInitializer
   include GameLoop
 
-  attr_reader_writer :rules, :name, :bank, :deck, :players
+  attr_reader_writer :rules, :name, :bank, :deck, :players, :session_end_flag
 
   def initialize(rules)
     @rules = rules

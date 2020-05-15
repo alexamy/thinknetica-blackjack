@@ -6,6 +6,7 @@ class Deck
   delegate :shuffle!, :pop, :push, :[], to: :cards
 
   alias get! pop
+  alias add! push
 
   def initialize(cards)
     @cards = cards

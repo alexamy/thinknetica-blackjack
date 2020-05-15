@@ -2,7 +2,7 @@
 module GameUI
   def show_ui
     system('clear')
-    show_player(:dealer)
+    show_player(:dealer, session_end_flag)
     show_bank
     show_player(:user, true)
   end

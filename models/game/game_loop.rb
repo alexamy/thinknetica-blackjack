@@ -4,6 +4,7 @@ module GameLoop
     loop do
       return if game_end?
 
+      self.session_end_flag = false
       init_session
       session_loop
     end
@@ -12,15 +13,31 @@ module GameLoop
   def session_loop
     loop do
       show_ui
-      player_turn
-      dealer_turn
       return if end_session?
+
+      user_turn(ask_turn)
+      dealer_turn
     end
   end
 
-  def player_turn
-    # ask player what to do
-    gets
+  # :reek:ControlParameter
+  def user_turn(choice)
+    case choice
+    when :add
+      players[:user].add!(deck.get!)
+    when :end
+      self.session_end_flag = true
+    end
+  end
+
+  def ask_turn
+    puts 'Your turn (1 pass, 2 add, 3 end):'
+    choice = gets.chomp.to_i
+    raise unless [1, 2, 3].include?(choice)
+
+    %i[pass add end][choice - 1]
+  rescue StandardError
+    retry
   end
 
   def dealer_turn
@@ -32,6 +49,6 @@ module GameLoop
   end
 
   def end_session?
-    # should game session end?
+    session_end_flag || players.all? { |player| player.cards.length == 3 }
   end
 end
