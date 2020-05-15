@@ -5,19 +5,19 @@ class Deck
 
   delegate :shuffle!, :pop, :push, :[], to: :cards
 
+  alias get! pop
+
   def initialize(cards)
     @cards = cards
-  end
-
-  def to_s
-    cards.map(&:to_s).join
   end
 
   def top_card
     cards.last
   end
 
-  alias get! pop
+  def to_s
+    cards.map(&:to_s).join
+  end
 end
 
 Hand = Deck
