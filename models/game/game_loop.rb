@@ -16,7 +16,10 @@ module GameLoop
   def session_loop
     loop do
       show_ui
-      return if end_session?
+      if end_session?
+        show_results
+        return
+      end
 
       user_turn(ask_turn)
       dealer_turn
@@ -41,6 +44,7 @@ module GameLoop
   end
 
   def ask_turn
+    # TODO show only pass / end if 3 cards
     puts 'Your turn (1 pass, 2 add, 3 end):'
     choice = gets.chomp.to_i
     raise unless [1, 2, 3].include?(choice)
@@ -53,6 +57,10 @@ module GameLoop
   def dealer_turn
     dealer = players[:dealer]
     dealer.add!(deck.get!) if rules.hand_value(dealer.cards) < 17
+  end
+
+  def show_results
+    # TODO
   end
 
   def set_end_game
