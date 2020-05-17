@@ -57,11 +57,11 @@ class Game
     cards_str = cards.map { |card| visible ? card.to_s.ljust(3, ' ') : 'XXX' }
     cards_str = cards_str.join(' ').ljust(12, ' ')
 
-    points = "Σ #{Card.points(cards)}".ljust(2, ' ')
+    points = "Σ #{Card.points(cards)}".ljust(4, ' ')
     points = points.gsub(/./, ' ') unless visible
 
     name = name.to_s.rjust(7, ' ')
-    money = "#{player.money}$".ljust(3, ' ')
+    money = "#{player.money}$".ljust(4, ' ')
 
     result = [cards_str, points, name, money]
     result.join(' ')
