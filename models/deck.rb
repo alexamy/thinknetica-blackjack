@@ -2,7 +2,7 @@
 class Deck
   attr_reader_writer :cards
 
-  delegate pop, push, to: cards
+  delegate :pop, :push, to: :cards
   alias get pop
   alias add push
 
