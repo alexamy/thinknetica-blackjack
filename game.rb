@@ -14,14 +14,10 @@ class Game
   end
 
   def run
-    loop do
-      begin
-        session_loop
-        ask_new_session
-      rescue EndGame
-        return
-      end
-    end
+    session_loop
+    ask_new_session
+  rescue NewGame
+    retry
   end
 
   def session_loop
@@ -134,8 +130,8 @@ def ask_new_session
   print 'Start new session? (n - no): '
   choice = gets.chomp
   puts
-  raise EndGame.new if choice.start_with?('n')
+  raise NewGame.new unless choice.start_with?('n')
 end
 
 class EndSession < StandardError; end
-class EndGame < StandardError; end
+class NewGame < StandardError; end
