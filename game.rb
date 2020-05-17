@@ -1,6 +1,6 @@
 # Main entry
 class Game
-  attr_reader_writer :deck, :players, :pool
+  attr_reader_writer :deck, :players, :pool, :flags
 
   START_MONEY = 100
 
@@ -9,12 +9,19 @@ class Game
       user: Player.new(START_MONEY),
       dealer: Player.new(START_MONEY)
     }
+    @flags = {
+      end_game: false,
+      end_session: false
+    }
   end
 
   def run
     init_session
-    show_ui
-    ask_choice
+    loop do
+      show_ui
+      user_turn(ask_choice)
+      dealer_turn
+    end
   end
 
   def init_session
@@ -51,5 +58,21 @@ class Game
     rescue StandardError
       retry
     end
+  end
+
+  def user_turn(choice)
+    player = players[:user]
+    case choice
+    when :add
+      player.add_card(deck.get)
+    when :end
+      flags[:end_session] = true
+    end
+  end
+
+  def dealer_turn
+    player = players[:dealer]
+    points = Card.points(player.cards)
+    player.add_card(deck.get) if points < 17 && player.cards.length < 3
   end
 end
