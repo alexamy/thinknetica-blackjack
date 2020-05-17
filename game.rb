@@ -52,7 +52,7 @@ class Game
     players.each do |name, player|
       cards = player.cards
 
-      cards_str = cards.map(&:to_s).join(' ').ljust(10, ' ')
+      cards_str = cards.map(&:to_s).join(' ').ljust(12, ' ')
       points = "Σ #{Card.points(cards)}".ljust(2, ' ')
       name = name.to_s.rjust(7, ' ')
       money = "#{player.money}$".ljust(3, ' ')
