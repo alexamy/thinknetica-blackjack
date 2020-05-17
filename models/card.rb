@@ -10,8 +10,8 @@ class Card
   end
 
   def to_s
-    suit = self.class.suits_str[suit]
-    value = self.class.values_str[value]
-    "#{value}#{suit} "
+    suit = self.class.suits_str[self.suit]
+    value = self.class.values_str[self.value]
+    "#{value}#{suit}"
   end
 end

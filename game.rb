@@ -25,8 +25,16 @@ class Game
   end
 
   def show_ui
+    players.each do |name, player|
+      cards = player.cards
+      cards_str = cards.map(&:to_s).join(' ')
+      puts "#{cards_str} #{Card.value(cards)} \
+            #{name.to_s.capitalize} #{player.money}$", "\n"
+    end
+    puts "Bank #{pool}$", "\n"
   end
 
   def ask_choice
+    gets
   end
 end
