@@ -39,6 +39,17 @@ class Game
   end
 
   def ask_choice
-    gets
+    options = %i[end pass add]
+    options.delete!(:add) if players[:user].cards.length > 2
+
+    begin
+      puts "Your choice (#{options.join(', ')}):"
+      choice = gets.chomp
+      result = options.find { |opt| opt.to_s.start_with?(choice) }
+      raise unless result
+      result
+    rescue StandardError
+      retry
+    end
   end
 end
