@@ -1,3 +1,5 @@
+# rubocop:disable all
+# :reek:all
 # Main entry
 class Game
   attr_reader_writer :deck, :players, :pool, :flags
@@ -47,11 +49,12 @@ class Game
 
   def ask_choice
     options = %i[end pass add]
-    options.delete!(:add) if players[:user].cards.length > 2
+    options.delete(:add) if players[:user].cards.length > 2
 
     begin
-      puts "Your choice (#{options.join(', ')}):"
+      print "Your choice (#{options.join(', ')}): "
       choice = gets.chomp
+      puts
       result = options.find { |opt| opt.to_s.start_with?(choice) }
       raise unless result
       result
@@ -72,7 +75,8 @@ class Game
 
   def dealer_turn
     player = players[:dealer]
-    points = Card.points(player.cards)
-    player.add_card(deck.get) if points < 17 && player.cards.length < 3
+    cards = player.cards
+    points = Card.points(cards)
+    player.add_card(deck.get) if points < 17 && cards.length < 3
   end
 end
