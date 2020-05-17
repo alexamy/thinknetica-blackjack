@@ -47,19 +47,28 @@ class Game
     self.pool = @players.values.map { |player| player.get_money(10) }.sum
   end
 
-  ## TODO show_dealer = true
   def show_ui(show_dealer = false)
-    players.each do |name, player|
-      cards = player.cards
+    player = show_player(:user, players[:user])
+    dealer = show_player(:dealer, players[:dealer], show_dealer)
 
-      cards_str = cards.map(&:to_s).join(' ').ljust(12, ' ')
-      points = "Σ #{Card.points(cards)}".ljust(2, ' ')
-      name = name.to_s.rjust(7, ' ')
-      money = "#{player.money}$".ljust(3, ' ')
-
-      puts [cards_str, points, name, money].join(' '), "\n"
-    end
+    puts player, "\n"
+    puts dealer, "\n"
     puts "Bank #{pool}$", "\n"
+  end
+
+  def show_player(name, player, visible = true)
+    cards = player.cards
+    cards_str = cards.map { |card| visible ? card.to_s.ljust(3, ' ') : 'XXX' }
+    cards_str = cards_str.join(' ').ljust(12, ' ')
+
+    points = "Σ #{Card.points(cards)}".ljust(2, ' ')
+    points = points.gsub(/./, ' ') unless visible
+
+    name = name.to_s.rjust(7, ' ')
+    money = "#{player.money}$".ljust(3, ' ')
+
+    result = [cards_str, points, name, money]
+    result.join(' ')
   end
 
   def ask_choice
