@@ -1,6 +1,6 @@
 # Play card
 class Card
-  include CardConstants
+  extend CardConstants
 
   attr_reader_writer :suit, :value
 
@@ -10,8 +10,8 @@ class Card
   end
 
   def to_s
-    suit = suits_str[suit]
-    value = values_str[value]
+    suit = self.class.suits_str[suit]
+    value = self.class.values_str[value]
     "#{value}#{suit} "
   end
 end
