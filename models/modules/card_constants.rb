@@ -25,7 +25,7 @@ module CardConstants
 
   def points(cards)
     points = values_points
-    aces, others = cards.partition { |card| card.suit == :ace }
+    aces, others = cards.partition { |card| card.value == :ace }
 
     sum = others.sum { |card| points[card.value] }
     aces.each { sum += sum + 11 < 21 ? 11 : 1 }

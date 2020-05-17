@@ -28,8 +28,11 @@ class Game
     players.each do |name, player|
       cards = player.cards
       cards_str = cards.map(&:to_s).join(' ')
-      puts "#{cards_str} #{Card.value(cards)} \
-            #{name.to_s.capitalize} #{player.money}$", "\n"
+
+      cards_row = "#{cards_str}  Σ #{Card.points(cards)}"
+      bank_row = "#{name.to_s.capitalize} #{player.money}$"
+
+      puts "#{cards_row} #{bank_row}", "\n"
     end
     puts "Bank #{pool}$", "\n"
   end
