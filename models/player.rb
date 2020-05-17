@@ -7,6 +7,10 @@ class Player
     @cards = cards
   end
 
+  def add_money(amount)
+    self.money += amount
+  end
+
   def get_money(amount)
     self.money -= amount
     amount

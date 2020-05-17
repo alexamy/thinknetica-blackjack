@@ -2,7 +2,7 @@
 # :reek:all
 # Main entry
 class Game
-  attr_reader_writer :deck, :players, :pool, :flags
+  attr_reader_writer :deck, :players, :pool, :flags, :show_dealer
 
   START_MONEY = 100
 
@@ -11,18 +11,21 @@ class Game
       user: Player.new(START_MONEY),
       dealer: Player.new(START_MONEY)
     }
-    @flags = {
-      end_game: false,
-      end_session: false
-    }
   end
 
   def run
     init_session
     loop do
-      show_ui
-      user_turn(ask_choice)
-      dealer_turn
+      begin
+        show_ui
+        user_turn(ask_choice)
+        dealer_turn
+        check_cards_count
+      rescue EndSession
+        show_result
+        show_ui(true)
+        break
+      end
     end
   end
 
@@ -33,7 +36,8 @@ class Game
     self.pool = @players.values.map { |player| player.get_money(10) }.sum
   end
 
-  def show_ui
+  ## TODO show_dealer = true
+  def show_ui(show_dealer = false)
     players.each do |name, player|
       cards = player.cards
 
@@ -69,7 +73,7 @@ class Game
     when :add
       player.add_card(deck.get)
     when :end
-      flags[:end_session] = true
+      raise EndSession.new
     end
   end
 
@@ -79,4 +83,32 @@ class Game
     points = Card.points(cards)
     player.add_card(deck.get) if points < 17 && cards.length < 3
   end
+
+  def check_cards_count
+    cards_enough = players.values.all? { |player| player.cards.length >= 3 }
+    raise EndSession.new if cards_enough
+  end
+
+  def show_result
+    user = Card.points(players[:user].cards)
+    dealer = Card.points(players[:dealer].cards)
+
+    draw = (user > 21 && dealer > 21) || (user == dealer)
+    user_win = user > dealer && user < 21
+
+    if draw
+      puts "Draw!"
+      players.values.each { |player| player.add_money(pool / 2) }
+    elsif user_win
+      puts "You win!"
+      players[:user].add_money(pool)
+    else
+      puts "You lose!"
+      players[:dealer].add_money(pool)
+    end
+    self.pool = 0
+  end
+end
+
+class EndSession < StandardError
 end
