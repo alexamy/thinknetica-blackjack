@@ -19,6 +19,7 @@ class Game
 
   def init_session
     self.deck = Deck.new
+    @players.each_value(&:throw_cards)
     2.times { @players.each_value { |player| player.add_card(deck.get) } }
     self.pool = @players.values.map { |player| player.get_money(10) }.sum
   end

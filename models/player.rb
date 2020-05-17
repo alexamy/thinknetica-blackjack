@@ -15,4 +15,8 @@ class Player
   def add_card(card)
     cards << card
   end
+
+  def throw_cards
+    self.cards = []
+  end
 end
