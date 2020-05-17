@@ -114,7 +114,7 @@ class Game
     dealer = Card.points(players[:dealer].cards)
 
     draw = (user > 21 && dealer > 21) || (user == dealer)
-    user_win = user > dealer && user < 21
+    user_win = user > dealer && user < 21 && dealer < 21
 
     if draw
       puts "Draw!"
