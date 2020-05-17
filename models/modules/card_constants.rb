@@ -14,7 +14,7 @@ module CardConstants
   end
 
   def values_str
-    strings = %w[A 2 3 4 5 6 7 8 9 T J Q K]
+    strings = %w[A 2 3 4 5 6 7 8 9 10 J Q K]
     values.zip(strings).to_h
   end
 

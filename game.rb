@@ -30,7 +30,7 @@ class Game
 
       cards_str = cards.map(&:to_s).join(' ').ljust(10, ' ')
       points = "Σ #{Card.points(cards)}".ljust(2, ' ')
-      name = name.to_s.rjust(8, ' ')
+      name = name.to_s.rjust(7, ' ')
       money = "#{player.money}$".ljust(3, ' ')
 
       puts [cards_str, points, name, money].join(' '), "\n"

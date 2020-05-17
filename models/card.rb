@@ -12,6 +12,6 @@ class Card
   def to_s
     suit = self.class.suits_str[self.suit]
     value = self.class.values_str[self.value]
-    "#{value}#{suit}"
+    "#{value}#{suit}".ljust(3, ' ')
   end
 end
