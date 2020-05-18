@@ -6,23 +6,17 @@ module Game
       puts "Bank #{pool}$", "\n"
     end
 
-    # :reek:TooManyStatements
-    def end_session
-      result = game_result
-      prize = pool / 2
-      self.pool = 0
-
-      players.each { |player| player.add_money(prize) }
-      user.add_money(prize) if result == :user
-      dealer.add_money(prize) if result == :dealer
-
-      puts congrats[result]
+    def show_session_congrat
+      congrats = {
+        draw: 'Draw!',
+        user: 'You win!',
+        dealer: 'You lose!'
+      }
+      puts congrats[game_result]
     end
 
     def show_end_congrat
-      user = self.user.money
-      dealer = self.dealer.money
-      puts user > dealer ? 'You win!' : 'You lose!'
+      puts user.money > dealer.money ? 'You win!' : 'You lose!'
     end
 
     def ask_new_session
@@ -41,16 +35,6 @@ module Game
       raise unless result
 
       result
-    end
-
-    protected
-
-    def congrats
-      {
-        draw: 'Draw!',
-        user: 'You win!',
-        dealer: 'You lose!'
-      }
     end
   end
 end

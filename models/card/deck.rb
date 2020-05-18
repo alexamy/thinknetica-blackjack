@@ -1,4 +1,4 @@
-# Standard 52-card deck
+# Cards holder
 class Deck
   attr_reader_writer :cards
 
