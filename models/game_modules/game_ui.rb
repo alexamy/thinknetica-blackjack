@@ -19,18 +19,20 @@ module Game
       puts user.money > dealer.money ? 'You win!' : 'You lose!'
     end
 
-    def ask_new_session
-      print 'Start new session? (n - no): '
-      choice = gets.chomp
+    def get_input(message)
+      print("#{message.capitalize}: ")
+      result = gets.chomp
       puts
+      result
+    end
+
+    def ask_new_session
+      choice = get_input('start new session? (n - no)')
       raise NewGame.new unless choice.start_with?('n')
     end
 
-    # :reek:TooManyStatements
     def ask_choice_for(options)
-      print "Your choice (#{options.join(', ')}): "
-      choice = gets.chomp
-      puts
+      choice = get_input("your choice (#{options.join(', ')})")
       result = options.find { |opt| opt.to_s.start_with?(choice) }
       raise if choice.empty? || !result
 

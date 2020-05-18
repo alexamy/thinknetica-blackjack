@@ -4,11 +4,12 @@ module Game
     START_MONEY = 100
 
     def init_players
-      @players = %i[user dealer].map do |name|
-        player = Player.new(name, START_MONEY, Deck.new)
-        self.class.send(:define_method, name) { player }
-        player
+      user_name = get_input('your name').to_sym
+      @players = [user_name, :dealer].map do |name|
+        Player.new(name, START_MONEY, Deck.new)
       end
+
+      init_player_methods
     end
 
     def init_session
@@ -17,6 +18,12 @@ module Game
     end
 
     protected
+
+    def init_player_methods
+      %i[user dealer].zip(players).each do |key, player|
+        self.class.send(:define_method, key) { player }
+      end
+    end
 
     def init_deck
       self.deck = Deck.new(Card.all)
