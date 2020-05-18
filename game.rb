@@ -1,5 +1,5 @@
-# Main entry
 module Game
+  # Main entry
   class Runner
     include Rules
     include Initializer
@@ -17,19 +17,14 @@ module Game
     def ask_choice
       options = %i[end pass add]
       options.delete(:add) if user.cards.length > 2
-
       begin
-        print "Your choice (#{options.join(', ')}): "
-        choice = gets.chomp
-        puts
-        result = options.find { |opt| opt.to_s.start_with?(choice) }
-        raise unless result
-        result
+        ask_choice_for(options)
       rescue StandardError
         retry
       end
     end
 
+    # :reek:ControlParameter
     def user_turn(choice)
       case choice
       when :add

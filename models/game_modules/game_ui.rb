@@ -32,6 +32,17 @@ module Game
       raise NewGame.new unless choice.start_with?('n')
     end
 
+    # :reek:TooManyStatements
+    def ask_choice_for(options)
+      print "Your choice (#{options.join(', ')}): "
+      choice = gets.chomp
+      puts
+      result = options.find { |opt| opt.to_s.start_with?(choice) }
+      raise unless result
+
+      result
+    end
+
     protected
 
     def congrats
