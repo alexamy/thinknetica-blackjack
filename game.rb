@@ -7,10 +7,18 @@ class Game
   START_MONEY = 100
 
   def initialize
-    @players = {
-      user: Player.new(START_MONEY),
-      dealer: Player.new(START_MONEY)
-    }
+    @players = [
+      Player.new(:user, START_MONEY),
+      Player.new(:dealer, START_MONEY)
+    ]
+  end
+
+  def user
+    players.find { |player| player.name == :user }
+  end
+
+  def dealer
+    players.find { |player| player.name == :dealer }
   end
 
   def run
@@ -38,21 +46,21 @@ class Game
 
   def init_session
     self.deck = Deck.new
-    @players.each_value(&:throw_cards)
-    2.times { @players.each_value { |player| player.add_card(deck.get) } }
-    self.pool = @players.values.map { |player| player.get_money(10) }.sum
+    players.each(&:throw_cards)
+    2.times { players.each { |player| player.add_card(deck.get) } }
+    self.pool = players.map { |player| player.get_money(10) }.sum
   end
 
   def show_ui(show_dealer = false)
-    player = show_player(:user, players[:user])
-    dealer = show_player(:dealer, players[:dealer], show_dealer)
+    user = show_player(self.user)
+    dealer = show_player(self.dealer, show_dealer)
 
-    puts player, "\n"
+    puts user, "\n"
     puts dealer, "\n"
     puts "Bank #{pool}$", "\n"
   end
 
-  def show_player(name, player, visible = true)
+  def show_player(player, visible = true)
     cards = player.cards
     cards_str = cards.map { |card| visible ? card.to_s.ljust(3, ' ') : 'XXX' }
     cards_str = cards_str.join(' ').ljust(12, ' ')
@@ -60,7 +68,7 @@ class Game
     points = "Σ #{Card.points(cards)}".ljust(4, ' ')
     points = points.gsub(/./, ' ') unless visible
 
-    name = name.to_s.rjust(7, ' ')
+    name = player.name.to_s.rjust(7, ' ')
     money = "#{player.money}$".ljust(4, ' ')
 
     result = [cards_str, points, name, money]
@@ -69,7 +77,7 @@ class Game
 
   def ask_choice
     options = %i[end pass add]
-    options.delete(:add) if players[:user].cards.length > 2
+    options.delete(:add) if user.cards.length > 2
 
     begin
       print "Your choice (#{options.join(', ')}): "
@@ -84,43 +92,41 @@ class Game
   end
 
   def user_turn(choice)
-    player = players[:user]
     case choice
     when :add
-      player.add_card(deck.get)
+      user.add_card(deck.get)
     when :end
       raise EndSession.new
     end
   end
 
   def dealer_turn
-    player = players[:dealer]
-    cards = player.cards
+    cards = dealer.cards
     points = Card.points(cards)
-    player.add_card(deck.get) if points < 17 && cards.length < 3
+    dealer.add_card(deck.get) if points < 17 && cards.length < 3
   end
 
   def check_cards_count
-    cards_enough = players.values.all? { |player| player.cards.length >= 3 }
+    cards_enough = players.all? { |player| player.cards.length >= 3 }
     raise EndSession.new if cards_enough
   end
 
   def show_result
-    user = Card.points(players[:user].cards)
-    dealer = Card.points(players[:dealer].cards)
+    user = Card.points(self.user.cards)
+    dealer = Card.points(self.dealer.cards)
 
     draw = (user > 21 && dealer > 21) || (user == dealer)
     user_win = (user > dealer && user < 21 && dealer < 21) || dealer > 21
 
     if draw
       puts "Draw!"
-      players.values.each { |player| player.add_money(pool / 2) }
+      players.each { |player| player.add_money(pool / 2) }
     elsif user_win
       puts "You win!"
-      players[:user].add_money(pool)
+      self.user.add_money(pool)
     else
       puts "You lose!"
-      players[:dealer].add_money(pool)
+      self.dealer.add_money(pool)
     end
     self.pool = 0
   end
