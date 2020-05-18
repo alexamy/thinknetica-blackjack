@@ -27,7 +27,7 @@ module Game
     end
 
     def init_pool
-      raise NoMoney.new if players.all? { |player| player.money < 10 }
+      raise NoMoney.new if players.any? { |player| player.money < 10 }
 
       self.pool = players.map { |player| player.get_money(10) }.sum
     end
