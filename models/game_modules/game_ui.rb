@@ -32,7 +32,7 @@ module Game
       choice = gets.chomp
       puts
       result = options.find { |opt| opt.to_s.start_with?(choice) }
-      raise unless result
+      raise if choice.empty? || !result
 
       result
     end
