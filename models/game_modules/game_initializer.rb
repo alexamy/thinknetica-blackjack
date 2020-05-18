@@ -19,7 +19,7 @@ module Game
     protected
 
     def init_deck
-      self.deck = Deck.new
+      self.deck = Deck.new(Card.all)
       players.each(&:throw_cards)
       2.times { players.each { |player| player.add_card(deck.get) } }
     end

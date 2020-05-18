@@ -43,7 +43,7 @@ module Game
 
     def dealer_turn
       cards = dealer.cards
-      points = Card.points(cards)
+      points = Game::Rules.points(cards)
       dealer.add_card(deck.get) if points < 17 && cards.length < 3
     end
 

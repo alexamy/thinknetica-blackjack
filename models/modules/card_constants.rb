@@ -22,4 +22,8 @@ module CardConstants
     prices = (1..10).to_a.push(10, 10, 10)
     values.zip(prices).to_h
   end
+
+  def all
+    suits.product(values).map { |opts| Card.new(*opts) }
+  end
 end

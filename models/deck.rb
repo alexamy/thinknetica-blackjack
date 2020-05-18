@@ -6,8 +6,7 @@ class Deck
   alias get pop
   alias add push
 
-  def initialize
-    all = Card.suits.product(Card.values)
-    @cards = all.map { |opts| Card.new(*opts) }.shuffle
+  def initialize(cards)
+    @cards = cards.shuffle
   end
 end
