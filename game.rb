@@ -7,18 +7,15 @@ class Game
   START_MONEY = 100
 
   def initialize
-    @players = [
-      Player.new(:user, START_MONEY),
-      Player.new(:dealer, START_MONEY)
-    ]
+    init_players
   end
 
-  def user
-    players.find { |player| player.name == :user }
-  end
-
-  def dealer
-    players.find { |player| player.name == :dealer }
+  def init_players
+    @players = [:user, :dealer].map do |name|
+      player = Player.new(name, START_MONEY)
+      self.class.send(:define_method, name) { player }
+      player
+    end
   end
 
   def run
