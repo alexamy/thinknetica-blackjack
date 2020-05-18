@@ -6,6 +6,7 @@ module Game
     include Initializer
     include Loop
     include UI
+    include PlayerPrint
 
     attr_reader_writer :deck, :players, :pool, :flags, :show_dealer
 
