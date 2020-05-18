@@ -2,37 +2,14 @@
 # :reek:all
 # Main entry
 class Game
+  include GameLoop
+
   attr_reader_writer :deck, :players, :pool, :flags, :show_dealer
 
   START_MONEY = 100
 
   def initialize
     init_players
-  end
-
-  def run
-    session_loop
-    ask_new_session
-  rescue NewGame
-    retry
-  rescue NoMoney
-    show_end_congrat
-  end
-
-  def session_loop
-    init_session
-    loop do
-      begin
-        show_ui
-        user_turn(ask_choice)
-        dealer_turn
-        check_cards_count
-      rescue EndSession
-        show_result
-        show_ui(true)
-        return
-      end
-    end
   end
 
   def init_players
@@ -145,7 +122,3 @@ class Game
     raise NewGame.new unless choice.start_with?('n')
   end
 end
-
-class EndSession < StandardError; end
-class NewGame < StandardError; end
-class NoMoney < StandardError; end
