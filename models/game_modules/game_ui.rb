@@ -8,7 +8,7 @@ module Game
 
     # :reek:TooManyStatements
     def end_session
-      result = Rules.game_result(user, dealer)
+      result = game_result
       prize = pool / 2
       self.pool = 0
 

@@ -9,11 +9,12 @@ module Game
       (user > dealer && user <= 21 && dealer <= 21) || dealer > 21
     end
 
-    def self.game_result(user, dealer)
-      user = user.cards.points
-      dealer = dealer.cards.points
-      return :draw if draw?(user, dealer)
-      return :user if user_win?(user, dealer)
+    def game_result
+      user = self.user.cards.points
+      dealer = self.dealer.cards.points
+
+      return :draw if Rules.draw?(user, dealer)
+      return :user if Rules.user_win?(user, dealer)
 
       :dealer
     end
