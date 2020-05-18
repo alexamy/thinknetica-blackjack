@@ -1,5 +1,3 @@
-# rubocop:disable all
-# :reek:all
 # Main entry
 module Game
   class Runner
@@ -39,12 +37,6 @@ module Game
       when :end
         raise EndSession.new
       end
-    end
-
-    def dealer_turn
-      cards = dealer.cards
-      points = cards.points
-      cards.add(deck.get) if points < 17 && cards.length < 3
     end
 
     def check_cards_count

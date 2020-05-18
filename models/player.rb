@@ -27,4 +27,9 @@ class Player
   def reset_cards(cards)
     self.cards = cards
   end
+
+  def ai_turn(deck)
+    points = cards.points
+    cards.add(deck.get) if points < 17 && cards.length < 3
+  end
 end

@@ -25,7 +25,7 @@ module Game
     def session_loop_inner
       show_ui
       user_turn(ask_choice)
-      dealer_turn
+      dealer.ai_turn(deck)
       check_cards_count
     end
 
