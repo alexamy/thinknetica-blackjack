@@ -38,5 +38,10 @@ module Game
 
       result
     end
+
+    def self.intro
+      'Welcome to blackjack game! When answering questions, ' \
+      'you can type first letter(s) of option.' \
+    end
   end
 end
