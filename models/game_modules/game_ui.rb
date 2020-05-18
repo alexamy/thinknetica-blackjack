@@ -9,14 +9,14 @@ module Game
     # :reek:TooManyStatements
     def show_result
       result = game_result
-      puts congrats[result]
-
       prize = pool / 2
       self.pool = 0
 
       players.each { |player| player.add_money(prize) }
       user.add_money(prize) if result == :user
       dealer.add_money(prize) if result == :dealer
+
+      puts congrats[result]
     end
 
     def show_end_congrat
