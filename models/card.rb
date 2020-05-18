@@ -9,9 +9,14 @@ class Card
     @value = value
   end
 
+  def points
+    self.class.values_points[value]
+  end
+
   def to_s
-    suit = self.class.suits_str[self.suit]
-    value = self.class.values_str[self.value]
+    eigen = self.class
+    suit  = eigen.suits_str[self.suit]
+    value = eigen.values_str[self.value]
     "#{value}#{suit}"
   end
 end
