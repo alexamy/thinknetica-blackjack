@@ -21,7 +21,7 @@ module PlayerPrint
   end
 
   def show_name
-    name.to_s.rjust(12, ' ')
+    name.to_s.capitalize.rjust(12, ' ')
   end
 
   def show_money
