@@ -30,7 +30,7 @@ module Game
     end
 
     def result_event
-      show_result
+      end_session
       dealer.visible = true
       show_ui
       dealer.visible = false

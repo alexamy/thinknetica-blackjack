@@ -7,8 +7,8 @@ module Game
     end
 
     # :reek:TooManyStatements
-    def show_result
-      result = game_result
+    def end_session
+      result = Rules.game_result(user, dealer)
       prize = pool / 2
       self.pool = 0
 
@@ -51,15 +51,6 @@ module Game
         user: 'You win!',
         dealer: 'You lose!'
       }
-    end
-
-    def game_result
-      user = self.user.cards.points
-      dealer = self.dealer.cards.points
-      return :draw if Rules.draw?(user, dealer)
-      return :user if Rules.user_win?(user, dealer)
-
-      :dealer
     end
   end
 end
