@@ -9,7 +9,7 @@ module PlayerPrint
   protected
 
   def show_cards
-    cards.map { |card| visible ? card.to_s.ljust(3, ' ') : 'XXX' }
+    cards.map { |card| visible ? card.to_s.ljust(3, ' ') : '***' }
          .join(' ')
          .ljust(12, ' ')
   end
