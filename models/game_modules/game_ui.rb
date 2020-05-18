@@ -1,12 +1,8 @@
 module Game
   # ui for game
   module UI
-    def show_ui(mode = :only_user)
-      user = self.user.show
-      dealer = self.dealer.show
-
-      puts user, "\n"
-      puts dealer, "\n"
+    def show_ui
+      players.each { |player| puts player, "\n" }
       puts "Bank #{pool}$", "\n"
     end
 

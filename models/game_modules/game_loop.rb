@@ -31,7 +31,9 @@ module Game
 
     def result_event
       show_result
-      show_ui(:all)
+      dealer.visible = true
+      show_ui
+      dealer.visible = false
     end
   end
 end

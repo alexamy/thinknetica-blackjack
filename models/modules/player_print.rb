@@ -1,11 +1,9 @@
 # print player data
 module PlayerPrint
-  def show
-    cards  = show_cards
-    points = show_points
-    name   = show_name
-    money  = show_money
-    [cards, points, name, money].join(' ')
+  def to_s
+    %i[cards points name money]
+      .map { |key| send("show_#{key}") }
+      .join(' ')
   end
 
   protected
