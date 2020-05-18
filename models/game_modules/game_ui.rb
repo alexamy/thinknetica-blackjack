@@ -11,21 +11,16 @@ module Game
     end
 
     def show_result
-      user = Card.points(self.user.cards)
-      dealer = Card.points(self.dealer.cards)
-
-      draw = (user > 21 && dealer > 21) || (user == dealer)
-      user_win = (user > dealer && user < 21 && dealer < 21) || dealer > 21
-
-      if draw
-        puts "Draw!"
+      case game_result
+      when :draw
+        puts 'Draw!'
         players.each { |player| player.add_money(pool / 2) }
-      elsif user_win
-        puts "You win!"
-        self.user.add_money(pool)
+      when :user
+        puts 'You win!'
+        user.add_money(pool)
       else
-        puts "You lose!"
-        self.dealer.add_money(pool)
+        puts 'You lose!'
+        dealer.add_money(pool)
       end
       self.pool = 0
     end
@@ -33,7 +28,7 @@ module Game
     def show_end_congrat
       user = self.user.money
       dealer = self.dealer.money
-      puts user > dealer ? "You win!" : "You lose!"
+      puts user > dealer ? 'You win!' : 'You lose!'
     end
 
     def ask_new_session
@@ -41,6 +36,27 @@ module Game
       choice = gets.chomp
       puts
       raise NewGame.new unless choice.start_with?('n')
+    end
+
+    protected
+
+    def game_result
+      user = Card.points(self.user.cards)
+      dealer = Card.points(self.dealer.cards)
+      return :draw if draw?(user, dealer)
+      return :user if user_win?(user, dealer)
+
+      :dealer
+    end
+
+    # :reek:UtilityFunction
+    def draw?(user, dealer)
+      (user > 21 && dealer > 21) || (user == dealer)
+    end
+
+    # :reek:UtilityFunction
+    def user_win?(user, dealer)
+      (user > dealer && user < 21 && dealer < 21) || dealer > 21
     end
   end
 end
