@@ -1,4 +1,5 @@
 # Add method to require_all directory
+# :reek:TooManyStatements, :reek:UtilityFunction
 module Kernel
   def require_all(directory_name)
     raise "Directory doesn't exist!" unless Dir.exist?(directory_name)
