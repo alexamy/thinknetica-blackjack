@@ -20,9 +20,9 @@ class Class
 
   def gelegate_one(method, target)
     var_name = "@#{target}"
-    define_method method do |*args|
+    define_method method do |*args, &block|
       var = instance_variable_get(var_name)
-      var.send(method, *args)
+      var.send(method, *args, &block)
     end
   end
 end

@@ -43,8 +43,8 @@ module Game
     end
 
     def game_result
-      user = Game::Rules.points(self.user.cards)
-      dealer = Game::Rules.points(self.dealer.cards)
+      user = self.user.cards.points
+      dealer = self.dealer.cards.points
       return :draw if Rules.draw?(user, dealer)
       return :user if Rules.user_win?(user, dealer)
 

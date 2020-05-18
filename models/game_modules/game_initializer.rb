@@ -5,7 +5,7 @@ module Game
 
     def init_players
       @players = %i[user dealer].map do |name|
-        player = Player.new(name, START_MONEY)
+        player = Player.new(name, START_MONEY, Deck.new)
         self.class.send(:define_method, name) { player }
         player
       end
@@ -20,8 +20,10 @@ module Game
 
     def init_deck
       self.deck = Deck.new(Card.all)
-      players.each(&:throw_cards)
-      2.times { players.each { |player| player.add_card(deck.get) } }
+      players.each do |player|
+        cards = 2.times.map { deck.get }
+        player.reset_cards(Deck.new(cards))
+      end
     end
 
     def init_pool

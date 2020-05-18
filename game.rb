@@ -35,7 +35,7 @@ module Game
     def user_turn(choice)
       case choice
       when :add
-        user.add_card(deck.get)
+        user.cards.add(deck.get)
       when :end
         raise EndSession.new
       end
@@ -43,8 +43,8 @@ module Game
 
     def dealer_turn
       cards = dealer.cards
-      points = Game::Rules.points(cards)
-      dealer.add_card(deck.get) if points < 17 && cards.length < 3
+      points = cards.points
+      cards.add(deck.get) if points < 17 && cards.length < 3
     end
 
     def check_cards_count

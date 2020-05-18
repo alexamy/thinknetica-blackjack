@@ -6,7 +6,9 @@ class Player
   attr_accessor :visible
   attr_reader_writer :name, :money, :cards
 
-  def initialize(name, money, cards = [], visible = true)
+  alias deck cards
+
+  def initialize(name, money, cards, visible = true)
     @name = name
     @money = money
     @cards = cards
@@ -22,11 +24,7 @@ class Player
     amount
   end
 
-  def add_card(card)
-    cards << card
-  end
-
-  def throw_cards
-    self.cards = []
+  def reset_cards(cards)
+    self.cards = cards
   end
 end
