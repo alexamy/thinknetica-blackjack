@@ -19,15 +19,16 @@ module Game
       :dealer
     end
 
-    # :reek:TooManyStatements
     def split_pool
-      result = game_result
-      prize = pool / 2
+      case game_result
+      when :draw
+        players.each { |player| player.add_money(pool / 2) }
+      when :user
+        user.add_money(pool)
+      when :dealer
+        dealer.add_money(pool)
+      end
       self.pool = 0
-
-      players.each { |player| player.add_money(prize) }
-      user.add_money(prize) if result == :user
-      dealer.add_money(prize) if result == :dealer
     end
   end
 end
