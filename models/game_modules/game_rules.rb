@@ -9,11 +9,11 @@ module Game
       (user > dealer && user <= 21 && dealer <= 21) || dealer > 21
     end
 
-    # :reek:TooManyStatements
     def self.points(cards)
-      aces, others = cards.partition { |card| card.value == :ace }
-      sum = others.sum(&:points)
-      aces.each { sum += sum + 11 < 21 ? 11 : 1 }
+      sum = cards.sum(&:points)
+      aces = cards.select { |card| card.value == :ace }
+
+      sum += 10 if aces.any? && sum + 10 <= 21
       sum
     end
   end
