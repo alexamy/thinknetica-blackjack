@@ -22,11 +22,4 @@ module CardConstants
     prices = (1..10).to_a.push(10, 10, 10)
     values.zip(prices).to_h
   end
-
-  def points(cards)
-    aces, others = cards.partition { |card| card.value == :ace }
-    sum = others.sum(&:points)
-    aces.each { sum += sum + 11 < 21 ? 11 : 1 }
-    sum
-  end
 end

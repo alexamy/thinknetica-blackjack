@@ -43,23 +43,12 @@ module Game
     end
 
     def game_result
-      user = Card.points(self.user.cards)
-      dealer = Card.points(self.dealer.cards)
+      user = Game::Rules.points(self.user.cards)
+      dealer = Game::Rules.points(self.dealer.cards)
       return :draw if Rules.draw?(user, dealer)
       return :user if Rules.user_win?(user, dealer)
 
       :dealer
-    end
-
-    # Specific to blackjack
-    module Rules
-      def self.draw?(user, dealer)
-        (user > 21 && dealer > 21) || (user == dealer)
-      end
-
-      def self.user_win?(user, dealer)
-        (user > dealer && user <= 21 && dealer <= 21) || dealer > 21
-      end
     end
   end
 end

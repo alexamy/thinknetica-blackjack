@@ -3,6 +3,7 @@
 # Main entry
 module Game
   class Runner
+    include Rules
     include Initializer
     include Loop
     include UI

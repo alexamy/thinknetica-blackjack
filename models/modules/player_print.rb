@@ -15,7 +15,7 @@ module PlayerPrint
   end
 
   def show_points
-    points = "Σ #{Card.points(cards)}".ljust(4, ' ')
+    points = "Σ #{Game::Rules.points(cards)}".ljust(4, ' ')
     points = points.gsub(/./, ' ') unless visible
     points
   end
