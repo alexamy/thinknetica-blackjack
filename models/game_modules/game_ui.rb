@@ -9,19 +9,16 @@ module GameUI
     puts "Bank #{pool}$", "\n"
   end
 
+  # :reek:TooManyStatements
   def show_player(player, visible = true)
-    cards = player.cards
-    cards_str = cards.map { |card| visible ? card.to_s.ljust(3, ' ') : 'XXX' }
-    cards_str = cards_str.join(' ').ljust(12, ' ')
+    cards_arr = player.cards
 
-    points = "Σ #{Card.points(cards)}".ljust(4, ' ')
-    points = points.gsub(/./, ' ') unless visible
+    cards  = show_cards(cards_arr, visible)
+    points = show_points(cards_arr, visible)
+    name   = show_name(player.name)
+    money  = show_money(player.money)
 
-    name = player.name.to_s.rjust(7, ' ')
-    money = "#{player.money}$".ljust(4, ' ')
-
-    result = [cards_str, points, name, money]
-    result.join(' ')
+    [cards, points, name, money].join(' ')
   end
 
   def show_result
@@ -55,5 +52,27 @@ module GameUI
     choice = gets.chomp
     puts
     raise NewGame.new unless choice.start_with?('n')
+  end
+
+  protected
+
+  def show_cards(cards, visible)
+    cards.map { |card| visible ? card.to_s.ljust(3, ' ') : 'XXX' }
+         .join(' ')
+         .ljust(12, ' ')
+  end
+
+  def show_points(cards, visible)
+    points = "Σ #{Card.points(cards)}".ljust(4, ' ')
+    points = points.gsub(/./, ' ') unless visible
+    points
+  end
+
+  def show_name(name)
+    name.to_s.rjust(7, ' ')
+  end
+
+  def show_money(money)
+    "#{money}$".ljust(4, ' ')
   end
 end
