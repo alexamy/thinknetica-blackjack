@@ -45,20 +45,21 @@ module Game
     def game_result
       user = Card.points(self.user.cards)
       dealer = Card.points(self.dealer.cards)
-      return :draw if draw?(user, dealer)
-      return :user if user_win?(user, dealer)
+      return :draw if Rules.draw?(user, dealer)
+      return :user if Rules.user_win?(user, dealer)
 
       :dealer
     end
 
-    # :reek:UtilityFunction
-    def draw?(user, dealer)
-      (user > 21 && dealer > 21) || (user == dealer)
-    end
+    # Specific to blackjack
+    module Rules
+      def self.draw?(user, dealer)
+        (user > 21 && dealer > 21) || (user == dealer)
+      end
 
-    # :reek:UtilityFunction
-    def user_win?(user, dealer)
-      (user > dealer && user <= 21 && dealer <= 21) || dealer > 21
+      def self.user_win?(user, dealer)
+        (user > dealer && user <= 21 && dealer <= 21) || dealer > 21
+      end
     end
   end
 end
