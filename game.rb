@@ -10,14 +10,6 @@ class Game
     init_players
   end
 
-  def init_players
-    @players = [:user, :dealer].map do |name|
-      player = Player.new(name, START_MONEY)
-      self.class.send(:define_method, name) { player }
-      player
-    end
-  end
-
   def run
     session_loop
     ask_new_session
@@ -40,6 +32,14 @@ class Game
         show_ui(true)
         return
       end
+    end
+  end
+
+  def init_players
+    @players = [:user, :dealer].map do |name|
+      player = Player.new(name, START_MONEY)
+      self.class.send(:define_method, name) { player }
+      player
     end
   end
 
