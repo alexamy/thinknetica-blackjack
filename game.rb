@@ -26,6 +26,8 @@ class Game
     ask_new_session
   rescue NewGame
     retry
+  rescue NoMoney
+    show_end_congrat
   end
 
   def session_loop
@@ -48,6 +50,8 @@ class Game
     self.deck = Deck.new
     players.each(&:throw_cards)
     2.times { players.each { |player| player.add_card(deck.get) } }
+
+    raise NoMoney.new if players.all? { |player| player.money < 10 }
     self.pool = players.map { |player| player.get_money(10) }.sum
   end
 
@@ -130,14 +134,21 @@ class Game
     end
     self.pool = 0
   end
-end
 
-def ask_new_session
-  print 'Start new session? (n - no): '
-  choice = gets.chomp
-  puts
-  raise NewGame.new unless choice.start_with?('n')
+  def show_end_congrat
+    user = self.user.money
+    dealer = self.dealer.money
+    puts user > dealer ? "You win!" : "You lose!"
+  end
+
+  def ask_new_session
+    print 'Start new session? (n - no): '
+    choice = gets.chomp
+    puts
+    raise NewGame.new unless choice.start_with?('n')
+  end
 end
 
 class EndSession < StandardError; end
 class NewGame < StandardError; end
+class NoMoney < StandardError; end
