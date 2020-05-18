@@ -6,19 +6,17 @@ module Game
       puts "Bank #{pool}$", "\n"
     end
 
+    # :reek:TooManyStatements
     def show_result
-      case game_result
-      when :draw
-        puts 'Draw!'
-        players.each { |player| player.add_money(pool / 2) }
-      when :user
-        puts 'You win!'
-        user.add_money(pool)
-      else
-        puts 'You lose!'
-        dealer.add_money(pool)
-      end
+      result = game_result
+      puts congrats[result]
+
+      prize = pool / 2
       self.pool = 0
+
+      players.each { |player| player.add_money(prize) }
+      user.add_money(prize) if result == :user
+      dealer.add_money(prize) if result == :dealer
     end
 
     def show_end_congrat
@@ -35,6 +33,14 @@ module Game
     end
 
     protected
+
+    def congrats
+      {
+        draw: 'Draw!',
+        user: 'You win!',
+        dealer: 'You lose!'
+      }
+    end
 
     def game_result
       user = Card.points(self.user.cards)
