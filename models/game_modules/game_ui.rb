@@ -1,9 +1,9 @@
 module Game
   # ui for game
   module UI
-    def show_ui(show_dealer = false)
-      user = show_player(self.user)
-      dealer = show_player(self.dealer, show_dealer)
+    def show_ui(mode = :only_user)
+      user = self.user.show
+      dealer = self.dealer.show
 
       puts user, "\n"
       puts dealer, "\n"

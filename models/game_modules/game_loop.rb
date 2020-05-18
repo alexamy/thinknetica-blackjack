@@ -31,7 +31,7 @@ module Game
 
     def result_event
       show_result
-      show_ui(true)
+      show_ui(:all)
     end
   end
 end

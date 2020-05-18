@@ -12,6 +12,7 @@ module Game
 
     def initialize
       init_players
+      dealer.visible = false
     end
 
     def ask_choice
