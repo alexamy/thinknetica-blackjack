@@ -58,7 +58,7 @@ module Game
 
     # :reek:UtilityFunction
     def user_win?(user, dealer)
-      (user > dealer && user < 21 && dealer < 21) || dealer > 21
+      (user > dealer && user <= 21 && dealer <= 21) || dealer > 21
     end
   end
 end
